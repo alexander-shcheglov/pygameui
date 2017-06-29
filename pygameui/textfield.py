@@ -1,8 +1,8 @@
 import pygame
 
-import view
-import label
-import callback
+from . import view
+from . import label
+from . import callback
 
 
 class TextField(view.View):
@@ -73,9 +73,7 @@ class TextField(view.View):
             self.label.frame.left = self.padding[0]
 
     def _update_text(self):
-        if (len(self.text) == 0 and
-            self.placeholder is not None and
-            not self.has_focus()):
+        if len(self.text) == 0 and self.placeholder is not None and not self.has_focus():
             self.label.text_color = self.placeholder_text_color
             self.label.text = self.placeholder
         elif len(self.text) >= 0:
@@ -88,8 +86,7 @@ class TextField(view.View):
         if not view.View.draw(self) or not self.has_focus():
             return False
 
-        if (not self.blink_cursor or
-            pygame.time.get_ticks() / self.cursor_blink_duration % 2 == 0):
+        if not self.blink_cursor or pygame.time.get_ticks() / self.cursor_blink_duration % 2 == 0:
             size = self.label.font.size(self.text)
             rect = pygame.Rect(
                 self.label.frame.left + self.label.padding[0] + size[0],

@@ -1,6 +1,6 @@
 import pygame
 
-import view
+from . import view
 
 
 class FlipbookView(view.View):

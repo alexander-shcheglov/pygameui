@@ -477,7 +477,7 @@ def _extractall(self, path=".", members=None):
 def _build_install_args(argv):
     install_args = []
     user_install = '--user' in argv
-    if user_install and sys.version_info < (2,6):
+    if user_install and sys.version_info < (2, 6):
         log.warn("--user requires Python 2.6 or later")
         raise SystemExit(1)
     if user_install:

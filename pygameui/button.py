@@ -1,7 +1,7 @@
-import label
-import callback
-import focus
-import theme
+from . import label
+from . import callback
+from . import focus
+from . import theme
 
 
 class Button(label.Label):

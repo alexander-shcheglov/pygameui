@@ -1,3 +1,37 @@
+# coding: utf-8
+
+import logging
+
+import pygame
+
+from . import focus
+from . import window
+from . import theme
+
+from .alert import *
+from .button import *
+from .callback import *
+from .checkbox import *
+from .dialog import *
+from .flipbook import *
+from .grid import *
+from .imagebutton import *
+from .imageview import *
+from .label import *
+from .listview import *
+from .notification import *
+from .progress import *
+from .render import *
+from .resource import *
+from .scroll import *
+from .select import *
+from .slider import *
+from .spinner import *
+from .textfield import *
+from .view import *
+from .scene import Scene
+
+
 """A simple GUI framework for Pygame.
 
 This framework is not meant as a competitor to PyQt or other, perhaps more
@@ -36,39 +70,6 @@ LICENSE = 'MIT'
 __version__ = '0.2.0'
 
 
-import pygame
-
-from alert import *
-from button import *
-from callback import *
-from checkbox import *
-from dialog import *
-from flipbook import *
-from grid import *
-from imagebutton import *
-from imageview import *
-from label import *
-from listview import *
-from notification import *
-from progress import *
-from render import *
-from resource import *
-from scroll import *
-from select import *
-from slider import *
-from spinner import *
-from textfield import *
-from view import *
-
-import focus
-import window
-import scene
-import theme
-
-from scene import Scene
-
-
-import logging
 logger = logging.getLogger(__name__)
 
 
@@ -89,7 +90,7 @@ def init(name='', window_size=(640, 480)):
 
 
 def run():
-    assert len(scene.stack) > 0
+    assert len(view.stack) > 0
 
     clock = pygame.time.Clock()
     down_in_view = None
@@ -113,10 +114,9 @@ def run():
             mousepoint = pygame.mouse.get_pos()
 
             if e.type == pygame.MOUSEBUTTONDOWN:
-                hit_view = scene.current.hit(mousepoint)
+                hit_view = view.current.hit(mousepoint)
                 logger.debug('hit %s' % hit_view)
-                if (hit_view is not None and
-                    not isinstance(hit_view, scene.Scene)):
+                if hit_view is not None and not isinstance(hit_view, Scene):
                     focus.set(hit_view)
                     down_in_view = hit_view
                     pt = hit_view.from_window(mousepoint)
@@ -124,7 +124,7 @@ def run():
                 else:
                     focus.set(None)
             elif e.type == pygame.MOUSEBUTTONUP:
-                hit_view = scene.current.hit(mousepoint)
+                hit_view = view.current.hit(mousepoint)
                 if hit_view is not None:
                     if down_in_view and hit_view != down_in_view:
                         down_in_view.blurred()
@@ -137,19 +137,19 @@ def run():
                     pt = down_in_view.from_window(mousepoint)
                     down_in_view.mouse_drag(pt, e.rel)
                 else:
-                    scene.current.mouse_motion(mousepoint)
+                    view.current.mouse_motion(mousepoint)
             elif e.type == pygame.KEYDOWN:
                 if focus.view:
                     focus.view.key_down(e.key, e.unicode)
                 else:
-                    scene.current.key_down(e.key, e.unicode)
+                    view.current.key_down(e.key, e.unicode)
             elif e.type == pygame.KEYUP:
                 if focus.view:
                     focus.view.key_up(e.key)
                 else:
-                    scene.current.key_up(e.key)
+                    view.current.key_up(e.key)
 
-        scene.current.update(dt / 1000.0)
-        scene.current.draw()
-        window_surface.blit(scene.current.surface, (0, 0))
+        view.current.update(dt / 1000.0)
+        view.current.draw()
+        window_surface.blit(view.current.surface, (0, 0))
         pygame.display.flip()

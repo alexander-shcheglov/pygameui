@@ -1,9 +1,9 @@
 import pygame
 
-import view
-import callback
-import imageview
-import focus
+from . import view
+from . import callback
+from . import imageview
+from . import focus
 
 
 class ImageButton(view.View):

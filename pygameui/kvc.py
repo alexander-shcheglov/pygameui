@@ -1,3 +1,5 @@
+import re
+
 """This module lets you set/get attribute values by walking
 a "key path" from a root or start object.
 
@@ -44,7 +46,6 @@ LICENSE = 'MIT'
 
 __version__ = '0.1.0'
 
-import re
 
 list_index_re = re.compile(r'([^\[]+)\[(\d+)\]')
 

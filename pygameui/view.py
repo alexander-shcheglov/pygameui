@@ -1,12 +1,37 @@
 import pygame
 
-import render
-import theme
-import callback
-import resource
-import focus
+from . import render
+from . import theme
+from . import callback
+from . import resource
+from . import focus
+from . import kvc
 
-import kvc
+
+current = None
+stack = []
+
+
+def push(scene):
+    global current
+    stack.append(scene)
+    current = scene
+    current.entered()
+    focus.set(None)
+
+
+def pop():
+    global current
+
+    if len(stack) > 0:
+        current.exited()
+        stack.pop()
+
+    if len(stack) > 0:
+        current = stack[-1]
+        current.entered()
+
+    focus.set(None)
 
 
 class View(object):
@@ -216,7 +241,7 @@ class View(object):
         for child in self.children:
             child.stylize()
         style = theme.current.get_dict(self)
-        for key, val in style.iteritems():
+        for key, val in style.items():
             kvc.set_value_for_keypath(self, key, val)
         self.layout()
 
@@ -245,8 +270,7 @@ class View(object):
                 self.surface.blit(child.surface, topleft)
 
                 if child.border_color and child.border_widths is not None:
-                    if (type(child.border_widths) is int and
-                        child.border_widths > 0):
+                    if type(child.border_widths) is int and child.border_widths > 0:
                         pygame.draw.rect(self.surface, child.border_color,
                                          child.frame, child.border_widths)
                     else:
@@ -307,8 +331,7 @@ class View(object):
         self.children.append(child)
         child.parent = self
         child.parented()
-        import scene
-        if scene.current is not None:
+        if current is not None:
             child.stylize()
 
     def rm_child(self, child):

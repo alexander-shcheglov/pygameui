@@ -1,7 +1,8 @@
 from itertools import chain
 
-import resource
-from colors import *
+from . import resource
+from .colors import *
+from .view import current as current_view
 
 
 class Theme(object):
@@ -140,11 +141,11 @@ class Theme(object):
                 except KeyError:
                     normal_styles = {}
 
-                state_styles = dict(chain(normal_styles.iteritems(),
-                                          state_styles.iteritems()))
+                state_styles = dict(chain(normal_styles.items(),
+                                          state_styles.items()))
 
-            style = dict(chain(state_styles.iteritems(),
-                               style.iteritems()))
+            style = dict(chain(state_styles.items(),
+                               style.items()))
 
         return style
 
@@ -180,9 +181,8 @@ def use_theme(theme):
     """
     global current
     current = theme
-    import scene
-    if scene.current is not None:
-        scene.current.stylize()
+    if current_view is not None:
+        current_view.stylize()
 
 
 def init_light_theme():

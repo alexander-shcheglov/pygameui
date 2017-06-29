@@ -1,10 +1,10 @@
 import pygame
 
-import view
-import callback
-import label
-import theme
-import focus
+from . import view
+from . import callback
+from . import label
+from . import theme
+from . import focus
 
 
 class Checkbox(view.View):

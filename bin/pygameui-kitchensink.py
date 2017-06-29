@@ -3,13 +3,11 @@
 import random
 import sys
 import os
-
-
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 import pygameui as ui
 
-
 import logging
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 log_format = '%(asctime)-6s: %(name)s - %(levelname)s - %(message)s'
 console_handler = logging.StreamHandler()
 console_handler.setFormatter(logging.Formatter(log_format))

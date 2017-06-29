@@ -1,12 +1,12 @@
 import pygame
 
-import view
-import theme
-import callback
-import listview
-import scroll
-import label
-import button
+from . import view
+from . import theme
+from . import callback
+from . import listview
+from . import scroll
+from . import label
+from . import button
 
 
 class SelectView(view.View):

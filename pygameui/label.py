@@ -1,6 +1,6 @@
 import re
 
-import view
+from . import view
 
 
 CENTER = 0

@@ -1,4 +1,4 @@
-import slider
+from . import slider
 
 
 class ProgressView(slider.SliderView):

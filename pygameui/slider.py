@@ -1,9 +1,9 @@
 import pygame
 
-import view
-import render
-import callback
-import scroll
+from . import view
+from . import render
+from . import callback
+from . import scroll
 
 
 HORIZONTAL = 0

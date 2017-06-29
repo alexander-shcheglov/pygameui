@@ -1,5 +1,5 @@
-import flipbook
-import resource
+from . import flipbook
+from . import resource
 
 
 class SpinnerView(flipbook.FlipbookView):

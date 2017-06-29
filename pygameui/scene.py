@@ -1,32 +1,7 @@
-import view
-import window
-import focus
+from . import view
+from . import window
 
-
-stack = []
-current = None
-
-
-def push(scene):
-    global current
-    stack.append(scene)
-    current = scene
-    current.entered()
-    focus.set(None)
-
-
-def pop():
-    global current
-
-    if len(stack) > 0:
-        current.exited()
-        stack.pop()
-
-    if len(stack) > 0:
-        current = stack[-1]
-        current.entered()
-
-    focus.set(None)
+push = view.push
 
 
 class Scene(view.View):
@@ -39,7 +14,7 @@ class Scene(view.View):
         import pygame
 
         if key == pygame.K_ESCAPE:
-            pop()
+            view.pop()
 
     def exited(self):
         pass

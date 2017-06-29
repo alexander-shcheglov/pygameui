@@ -1,8 +1,8 @@
 import pygame
 
-import view
-import callback
-import scroll
+from . import view
+from . import callback
+from . import scroll
 
 
 class ListView(view.View):

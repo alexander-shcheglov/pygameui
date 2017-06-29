@@ -1,11 +1,11 @@
 import pygame
 
-import dialog
-import label
-import theme
-import button
-import window
-
+from . import dialog
+from . import label
+from . import theme
+from . import button
+from . import window
+from . import view
 
 OK = 1
 CANCEL = 2
@@ -21,8 +21,10 @@ class AlertView(dialog.DialogView):
         self.message = message
         self.buttons = buttons
 
-        self.message_label = label.Label(pygame.Rect(0, 0, 1, 1),
-            message, wrap=label.WORD_WRAP)
+        self.message_label = label.Label(
+            pygame.Rect(0, 0, 1, 1),
+            message,
+            wrap=label.WORD_WRAP)
         self.message_label.valign = label.TOP
         self.add_child(self.message_label)
 
@@ -103,7 +105,6 @@ class AlertView(dialog.DialogView):
 
 def show_alert(message, title='Info', buttons=OK):
     alert_view = AlertView(title, message, buttons)
-    import scene
-    scene.current.add_child(alert_view)
+    view.current.add_child(alert_view)
     alert_view.focus()
     alert_view.center()
