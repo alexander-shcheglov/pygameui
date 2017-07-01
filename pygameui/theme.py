@@ -97,6 +97,38 @@ class Theme(object):
         self._styles.setdefault(class_name, {}).setdefault(state, {})
         self._styles[class_name][state][key] = value
 
+    def set_for_class(self, class_name, params):
+        """
+            Set a multi style value for a view class.
+
+        :param class_name: The name of the class to be styled; do not
+            include the package name; e.g. 'Button'
+        :param params: list of tuples, ('focused', 'background_color', black)
+        :return: None
+        """
+        self._styles.setdefault(class_name, {})
+        for state, key, value in sorted(params, key=lambda x: x[0]):
+            self._styles[class_name].setdefault(state, {})
+            self._styles[class_name][state][key] = value
+
+    def set_for_theme(self, params):
+        """
+        Set a style for theme
+        :param params: list of tuples, [
+            (
+                'Button',
+                [
+                    ('focused', 'background_color', black),
+                    ...,
+                ]
+            ),
+            ...,
+        ]
+        :return: None
+        """
+        for class_name, args in params:
+            self.set_for_class(class_name, args)
+
     def get_dict_for_class(self, class_name, state=None, base_name='View'):
         """The style dict for a given class and state.
 
@@ -195,321 +227,182 @@ def init_light_theme():
     color7 = gray_color
     color8 = dark_gray_color
     color9 = black_color
-
-    light_theme.set(class_name='View',
-                    state='normal',
-                    key='background_color',
-                    value=(color4, color5))
-    light_theme.set(class_name='View',
-                    state='focused',
-                    key='background_color',
-                    value=(color1, color2))
-    light_theme.set(class_name='View',
-                    state='selected',
-                    key='background_color',
-                    value=(color1, color2))
-    light_theme.set(class_name='View',
-                    state='normal',
-                    key='border_color',
-                    value=color6)
-    light_theme.set(class_name='View',
-                    state='normal',
-                    key='border_widths',
-                    value=0)
-    light_theme.set(class_name='View',
-                    state='normal',
-                    key='margin',
-                    value=(6, 6))
-    light_theme.set(class_name='View',
-                    state='normal',
-                    key='padding',
-                    value=(0, 0))
-    light_theme.set(class_name='View',
-                    state='normal',
-                    key='shadowed',
-                    value=False)
-
-    light_theme.set(class_name='Scene',
-                    state='normal',
-                    key='background_color',
-                    value=(color5, color4))
-
-    light_theme.set(class_name='Label',
-                    state='normal',
-                    key='text_color',
-                    value=color8)
-    light_theme.set(class_name='Label',
-                    state='selected',
-                    key='text_color',
-                    value=color3)
-    light_theme.set(class_name='Label',
-                    state='normal',
-                    key='text_shadow_color',
-                    value=color4)
-    light_theme.set(class_name='Label',
-                    state='normal',
-                    key='text_shadow_offset',
-                    value=(0, 1))
-    light_theme.set(class_name='Label',
-                    state='normal',
-                    key='padding',
-                    value=(6, 6))
-    light_theme.set(class_name='Label',
-                    state='normal',
-                    key='border_widths',
-                    value=None)
-    light_theme.set(class_name='Label',
-                    state='normal',
-                    key='font',
-                    value=resource.get_font(16))
-
-    light_theme.label_height = 16 + 6 * 2  # font size + padding above/below
-
-    light_theme.set(class_name='Button',
-                    state='normal',
-                    key='background_color',
-                    value=(color4, color6))
-    light_theme.set(class_name='Button',
-                    state='focused',
-                    key='background_color',
-                    value=color1)
-    light_theme.set(class_name='Button',
-                    state='normal',
-                    key='text_color',
-                    value=color8)
-    light_theme.set(class_name='Button',
-                    state='normal',
-                    key='font',
-                    value=resource.get_font(16, use_bold=True))
-    light_theme.set(class_name='Button',
-                    state='normal',
-                    key='border_widths',
-                    value=1)
-    light_theme.set(class_name='Button',
-                    state='normal',
-                    key='border_color',
-                    value=color6)
-
-    light_theme.button_height = 16 + 6 * 2  # font size + padding above/below
-
-    light_theme.set(class_name='ImageButton',
-                    state='normal',
-                    key='background_color',
-                    value=(color4, color6))
-    light_theme.set(class_name='ImageButton',
-                    state='focused',
-                    key='background_color',
-                    value=color1)
-    light_theme.set(class_name='ImageButton',
-                    state='normal',
-                    key='border_color',
-                    value=color6)
-    light_theme.set(class_name='ImageButton',
-                    state='normal',
-                    key='border_widths',
-                    value=1)
-    light_theme.set(class_name='ImageButton',
-                    state='normal',
-                    key='padding',
-                    value=(6, 6))
-
-    light_theme.set(class_name='ScrollbarThumbView',
-                    state='normal',
-                    key='background_color',
-                    value=(color4, color6))
-    light_theme.set(class_name='ScrollbarThumbView',
-                    state='focused',
-                    key='background_color',
-                    value=(color1, color2))
-    light_theme.set(class_name='ScrollbarThumbView',
-                    state='normal',
-                    key='border_widths',
-                    value=1)
-
-    light_theme.set(class_name='ScrollbarView',
-                    state='normal',
-                    key='background_color',
-                    value=color5)
-    light_theme.set(class_name='ScrollbarView',
-                    state='normal',
-                    key='border_widths',
-                    value=(1, 1, 0, 0))   # t l b r
-
-    light_theme.set(class_name='ScrollView',
-                    state='normal',
-                    key='hole_color',
-                    value=whites_twin_color)
-    light_theme.set(class_name='ScrollView',
-                    state='normal',
-                    key='border_widths',
-                    value=1)
-
-    light_theme.set(class_name='SliderTrackView',
-                    state='normal',
-                    key='background_color',
-                    value=(color5, color4))
-    light_theme.set(class_name='SliderTrackView',
-                    state='normal',
-                    key='value_color',
-                    value=(color1, color2))
-    light_theme.set(class_name='SliderTrackView',
-                    state='normal',
-                    key='border_widths',
-                    value=1)
-
-    light_theme.set(class_name='SliderView',
-                    state='normal',
-                    key='background_color',
-                    value=clear_color)
-    light_theme.set(class_name='SliderView',
-                    state='normal',
-                    key='border_widths',
-                    value=None)
-
-    light_theme.set(class_name='ImageView',
-                    state='normal',
-                    key='background_color',
-                    value=None)
-    light_theme.set(class_name='ImageView',
-                    state='normal',
-                    key='padding',
-                    value=(0, 0))
-
-    light_theme.set(class_name='Checkbox',
-                    state='normal',
-                    key='background_color',
-                    value=clear_color)
-    light_theme.set(class_name='Checkbox',
-                    state='normal',
-                    key='padding',
-                    value=(0, 0))
-
-    light_theme.set(class_name='Checkbox',
-                    state='focused',
-                    key='check_label.background_color',
-                    value=(color1, color2))
-    light_theme.set(class_name='Checkbox',
-                    state='normal',
-                    key='check_label.border_widths',
-                    value=1)
-
-    light_theme.set(class_name='Checkbox',
-                    state='normal',
-                    key='label.background_color',
-                    value=clear_color)
-
-    light_theme.set(class_name='SpinnerView',
-                    state='normal',
-                    key='border_widths',
-                    value=None)
-
-    light_theme.set(class_name='DialogView',
-                    state='normal',
-                    key='background_color',
-                    value=(color4, color6))
-    light_theme.set(class_name='DialogView',
-                    state='normal',
-                    key='shadowed',
-                    value=True)
-
-    light_theme.shadow_size = 140
-
-    light_theme.set(class_name='AlertView',
-                    state='normal',
-                    key='title_label.background_color',
-                    value=color7)
-    light_theme.set(class_name='AlertView',
-                    state='normal',
-                    key='title_label.text_color',
-                    value=color4)
-    light_theme.set(class_name='AlertView',
-                    state='normal',
-                    key='title_label.text_shadow_offset',
-                    value=None)
-    light_theme.set(class_name='AlertView',
-                    state='normal',
-                    key='message_label.background_color',
-                    value=clear_color)
-    light_theme.set(class_name='AlertView',
-                    state='normal',
-                    key='font',
-                    value=resource.get_font(16))
-    light_theme.set(class_name='AlertView',
-                    state='normal',
-                    key='padding',
-                    value=(6, 6))
-
-    light_theme.set(class_name='NotificationView',
-                    state='normal',
-                    key='background_color',
-                    value=(color1, color2))
-    light_theme.set(class_name='NotificationView',
-                    state='normal',
-                    key='border_color',
-                    value=color3)
-    light_theme.set(class_name='NotificationView',
-                    state='normal',
-                    key='border_widths',
-                    value=(0, 2, 2, 2))
-    light_theme.set(class_name='NotificationView',
-                    state='normal',
-                    key='padding',
-                    value=(0, 0))
-    light_theme.set(class_name='NotificationView',
-                    state='normal',
-                    key='message_label.background_color',
-                    value=clear_color)
-
-    light_theme.set(class_name='SelectView',
-                    state='normal',
-                    key='disclosure_triangle_color',
-                    value=color8)
-    light_theme.set(class_name='SelectView',
-                    state='normal',
-                    key='border_widths',
-                    value=1)
-    light_theme.set(class_name='SelectView',
-                    state='normal',
-                    key='top_label.focusable',
-                    value=False)
-
-    light_theme.set(class_name='TextField',
-                    state='focused',
-                    key='label.background_color',
-                    value=(color1, color2))
-    light_theme.set(class_name='TextField',
-                    state='normal',
-                    key='placeholder_text_color',
-                    value=color6)
-    light_theme.set(class_name='TextField',
-                    state='normal',
-                    key='border_widths',
-                    value=1)
-    light_theme.set(class_name='TextField',
-                    state='normal',
-                    key='text_color',
-                    value=color9)
-    light_theme.set(class_name='TextField',
-                    state='disabled',
-                    key='text_color',
-                    value=color6)
-    light_theme.set(class_name='TextField',
-                    state='normal',
-                    key='blink_cursor',
-                    value=True)
-    light_theme.set(class_name='TextField',
-                    state='normal',
-                    key='cursor_blink_duration',
-                    value=450)
-
-    light_theme.set(class_name='GridView',
-                    state='normal',
-                    key='background_color',
-                    value=color4)
-    light_theme.set(class_name='GridView',
-                    state='normal',
-                    key='line_color',
-                    value=color6)
+    theme = Theme()
+    theme.label_height = 16 + 6 * 2  # font size + padding above/below
+    theme.button_height = 16 + 6 * 2  # font size + padding above/below
+    theme.shadow_size = 140
+    theme.set_for_theme(
+        [
+            (
+                'View',
+                [
+                    ('normal', 'background_color', (color4, color5)),
+                    ('focused', 'background_color', (color1, color2)),
+                    ('selected', 'background_color', (color1, color2)),
+                    ('normal', 'border_color', color6),
+                    ('normal', 'border_widths', 0),
+                    ('normal', 'margin', (6, 6)),
+                    ('normal', 'padding', (0, 0)),
+                    ('normal', 'shadowed', False),
+                ]
+            ),
+            (
+                'Scene',
+                [
+                    ('normal', 'background_color', (color5, color4))
+                ]
+            ),
+            (
+                'Label',
+                [
+                    ('normal', 'text_color', color8),
+                    ('selected', 'text_color', color3),
+                    ('normal', 'text_shadow_color', color4),
+                    ('normal', 'text_shadow_offset', (0, 1)),
+                    ('normal', 'padding', (6, 6)),
+                    ('normal', 'border_widths', None),
+                    ('normal', 'font', resource.get_font(16)),
+                ]
+            ),
+            (
+                'Button',
+                [
+                    ('normal', 'background_color', (color4, color6)),
+                    ('focused', 'background_color', color1),
+                    ('normal', 'text_color', color8),
+                    ('normal', 'font', resource.get_font(16, use_bold=True)),
+                    ('normal', 'border_widths', 1),
+                    ('normal', 'border_color', color6),
+                ]
+            ),
+            (
+                'ImageButton',
+                [
+                    ('normal', 'background_color', (color4, color6)),
+                    ('focused', 'background_color', color1),
+                    ('normal', 'border_color', color6),
+                    ('normal', 'border_widths', 1),
+                    ('normal', 'padding', (6, 6)),
+                ]
+            ),
+            (
+                'ScrollbarThumbView',
+                [
+                    ('normal', 'background_color', (color4, color6)),
+                    ('focused', 'background_color', (color1, color2)),
+                    ('normal', 'border_widths', 1),
+                ]
+            ),
+            (
+                'ScrollbarView',
+                [
+                    ('normal', 'background_color', color5),
+                    ('normal', 'border_widths', (1, 1, 0, 0)),
+                ]
+            ),
+            (
+                'ScrollView',
+                [
+                    ('normal', 'hole_color', whites_twin_color),
+                    ('normal', 'border_widths', 1),
+                ]
+            ),
+            (
+                'SliderTrackView',
+                [
+                    ('normal', 'background_color', (color5, color4)),
+                    ('normal', 'value_color', (color1, color2)),
+                    ('normal', 'border_widths', 1),
+                ]
+            ),
+            (
+                'SliderView',
+                [
+                    ('normal', 'background_color', clear_color),
+                    ('normal', 'border_widths', None),
+                ]
+            ),
+            (
+                'ImageView',
+                [
+                    ('normal', 'background_color', None),
+                    ('normal', 'padding', (0, 0)),
+                ]
+            ),
+            (
+                'Checkbox',
+                [
+                    ('normal', 'background_color', clear_color),
+                    ('normal', 'padding', (0, 0)),
+                    ('focused', 'check_label.background_color', (color1, color2)),
+                    ('normal', 'check_label.border_widths', 1),
+                    ('normal', 'label.background_color', clear_color),
+                ]
+            ),
+            (
+                'SpinnerView',
+                [
+                    ('normal', 'border_widths', None)
+                ]
+            ),
+            (
+                'DialogView',
+                [
+                    ('normal', 'background_color', (color4, color6)),
+                    ('normal', 'shadowed', True),
+                ]
+            ),
+            (
+                'AlertView',
+                [
+                    ('normal', 'title_label.background_color', color7),
+                    ('normal', 'title_label.text_color', color4),
+                    ('normal', 'title_label.text_shadow_offset', None),
+                    ('normal', 'message_label.background_color', clear_color),
+                    ('normal', 'font', resource.get_font(16)),
+                    ('normal', 'padding', (6, 6)),
+                ]
+            ),
+            (
+                'NotificationView',
+                [
+                    ('normal', 'background_color', (color1, color2)),
+                    ('normal', 'border_color', color3),
+                    ('normal', 'border_widths', (0, 2, 2, 2)),
+                    ('normal', 'padding', (0, 0)),
+                    ('normal', 'message_label.background_color', clear_color),
+                ]
+            ),
+            (
+                'SelectView',
+                [
+                    ('normal', 'disclosure_triangle_color', color8),
+                    ('normal', 'border_widths', 1),
+                    ('normal', 'top_label.focusable', False),
+                ]
+            ),
+            (
+                'TextField',
+                [
+                    ('focused', 'label.background_color', (color1, color2)),
+                    ('normal', 'placeholder_text_color', color6),
+                    ('normal', 'border_widths', 1),
+                    ('normal', 'text_color', color9),
+                    ('disabled', 'text_color', color6),
+                    ('normal', 'blink_cursor', True),
+                    ('normal', 'cursor_blink_duration', 450),
+                ]
+            ),
+            (
+                'GridView',
+                [
+                    ('normal', 'background_color', color4),
+                    ('normal', 'line_color', color6),
+                ]
+            )
+        ]
+    )
+    return theme
 
 
 def init_dark_theme():
@@ -517,8 +410,194 @@ def init_dark_theme():
     pass
 
 
+def init_dracula_theme():
+    theme = Theme()
+    theme.label_height = 16 + 6 * 2  # font size + padding above/below
+    theme.button_height = 16 + 6 * 2  # font size + padding above/below
+    theme.shadow_size = 140
+    font_size = 8
+    theme.set_for_theme(
+        [
+            (
+                'View',
+                [
+                    ('normal', 'background_color', black_color),
+                    ('focused', 'background_color', red_color),
+                    ('selected', 'background_color', red_color),
+                    ('normal', 'border_color', red_color),
+                    ('normal', 'border_widths', 0),
+                    ('normal', 'margin', (6, 6)),
+                    ('normal', 'padding', (0, 0)),
+                    ('normal', 'shadowed', False),
+                ]
+            ),
+            (
+                'Scene',
+                [
+                    ('normal', 'background_color', black_color)
+                ]
+            ),
+            (
+                'Label',
+                [
+                    ('normal', 'text_color', red_color),
+                    ('selected', 'text_color', black_color),
+                    ('normal', 'text_shadow_color', red_color),
+                    ('normal', 'text_shadow_offset', (0, 1)),
+                    ('normal', 'padding', (6, 6)),
+                    ('normal', 'border_widths', None),
+                    ('normal', 'font', resource.get_font(font_size)),
+                ]
+            ),
+            (
+                'Button',
+                [
+                    ('normal', 'background_color', black_color),
+                    ('focused', 'background_color', red_color),
+                    ('normal', 'text_color', red_color),
+                    ('focused', 'text_color', black_color),
+                    ('normal', 'font', resource.get_font(font_size, use_bold=True)),
+                    ('normal', 'border_widths', 1),
+                    ('normal', 'border_color', red_color),
+                ]
+            ),
+            (
+                'ImageButton',
+                [
+                    ('normal', 'background_color', black_color),
+                    ('focused', 'background_color', red_color),
+                    ('normal', 'border_color', red_color),
+                    ('normal', 'border_widths', 1),
+                    ('normal', 'padding', (6, 6)),
+                ]
+            ),
+            (
+                'ScrollbarThumbView',
+                [
+                    ('normal', 'background_color', black_color),
+                    ('focused', 'background_color', red_color),
+                    ('normal', 'border_widths', 1),
+                ]
+            ),
+            (
+                'ScrollbarView',
+                [
+                    ('normal', 'background_color', black_color),
+                    ('normal', 'border_widths', (1, 1, 0, 0)),
+                ]
+            ),
+            (
+                'ScrollView',
+                [
+                    ('normal', 'hole_color', red_color),
+                    ('normal', 'border_widths', 1),
+                ]
+            ),
+            (
+                'SliderTrackView',
+                [
+                    ('normal', 'background_color', black_color),
+                    ('normal', 'value_color', red_color),
+                    ('normal', 'border_widths', 1),
+                ]
+            ),
+            (
+                'SliderView',
+                [
+                    ('normal', 'background_color', black_color),
+                    ('normal', 'border_widths', None),
+                ]
+            ),
+            (
+                'ImageView',
+                [
+                    ('normal', 'background_color', clear_color),
+                    ('normal', 'padding', (0, 0)),
+                ]
+            ),
+            (
+                'Checkbox',
+                [
+                    ('normal', 'background_color', black_color),
+                    ('normal', 'padding', (0, 0)),
+                    ('focused', 'check_label.background_color', red_color),
+                    ('normal', 'check_label.border_widths', 1),
+                    ('normal', 'label.background_color', clear_color),
+                ]
+            ),
+            (
+                'SpinnerView',
+                [
+                    ('normal', 'border_widths', None),
+                ]
+            ),
+            (
+                'DialogView',
+                [
+                    ('normal', 'background_color', black_color),
+                    ('normal', 'shadowed', True),
+                    ('normal', 'border_widths', 1),
+                ]
+            ),
+            (
+                'AlertView',
+                [
+                    ('normal', 'title_label.background_color', black_color),
+                    ('normal', 'title_label.text_color', red_color),
+                    ('normal', 'title_label.border_widths', 1),
+                    ('normal', 'title_label.text_shadow_offset', None),
+                    ('normal', 'message_label.background_color', clear_color),
+                    ('normal', 'font', resource.get_font(font_size)),
+                    ('normal', 'padding', (6, 6)),
+                ]
+            ),
+            (
+                'NotificationView',
+                [
+                    ('normal', 'background_color', black_color),
+                    ('normal', 'border_color', red_color),
+                    ('normal', 'border_widths', (0, 2, 2, 2)),
+                    ('normal', 'padding', (0, 0)),
+                    ('normal', 'message_label.background_color', clear_color),
+                ]
+            ),
+            (
+                'SelectView',
+                [
+                    ('normal', 'disclosure_triangle_color', black_color),
+                    ('normal', 'border_widths', 1),
+                    ('normal', 'top_label.focusable', False),
+                ]
+            ),
+            (
+                'TextField',
+                [
+                    ('focused', 'label.background_color', black_color),
+                    ('focused', 'text_color', red_color),
+                    ('normal', 'placeholder_text_color', red_color),
+                    ('normal', 'border_widths', 1),
+                    ('normal', 'text_color', red_color),
+                    ('normal', 'background_color', black_color),
+                    ('disabled', 'text_color', red_color),
+                    ('normal', 'blink_cursor', True),
+                    ('normal', 'cursor_blink_duration', 450),
+                ]
+            ),
+            (
+                'GridView',
+                [
+                    ('normal', 'background_color', black_color),
+                    ('normal', 'line_color', red_color),
+                ]
+            )
+        ]
+    )
+    return theme
+
+
 def init():
     """Initialize theme support."""
-    init_light_theme()
-    init_dark_theme()
-    use_theme(light_theme)
+    light = init_light_theme()
+    dark = init_dark_theme()
+    dracula_theme = init_dracula_theme()
+    use_theme(dracula_theme)
