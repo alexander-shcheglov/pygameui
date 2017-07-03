@@ -4,8 +4,8 @@
 # This seems to be the recommended tool until 'distutils2' is completed.
 # See: http://pypi.python.org/pypi/distribute
 
-import distribute_setup
-distribute_setup.use_setuptools()
+# import distribute_setup
+# distribute_setup.use_setuptools()
 from setuptools import setup
 
 # Find the version from the package metadata.
@@ -41,7 +41,7 @@ setup(
     description='GUI framework for Pygame',
     keywords="UI GUI Pygame button scrollbar progress slider user interface",
     license='MIT',
-    url='https://github.com/fictorial/pygameui',
+    url='https://github.com/alexander-shcheglov/pygameui',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
