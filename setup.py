@@ -4,8 +4,6 @@
 # This seems to be the recommended tool until 'distutils2' is completed.
 # See: http://pypi.python.org/pypi/distribute
 
-# import distribute_setup
-# distribute_setup.use_setuptools()
 from setuptools import setup
 
 # Find the version from the package metadata.
