@@ -1,7 +1,6 @@
 import pygame
 
 from . import render
-from . import theme
 from . import callback
 from . import resource
 from . import focus
@@ -66,6 +65,8 @@ class View(object):
     """
 
     def __init__(self, frame=None):
+        from . import theme
+        self.theme = theme.current
         self.frame = frame
 
         self.parent = None
@@ -103,7 +104,7 @@ class View(object):
         views and/or updating its own frame.
         """
         if self.shadowed:
-            shadow_size = theme.current.shadow_size
+            shadow_size = self.theme.shadow_size
             shadowed_frame_size = (self.frame.w + shadow_size,
                                    self.frame.h + shadow_size)
             self.surface = pygame.Surface(
@@ -240,7 +241,7 @@ class View(object):
         # do children first in case parent needs to override their style
         for child in self.children:
             child.stylize()
-        style = theme.current.get_dict(self)
+        style = self.theme.get_dict(self)
         for key, val in style.items():
             kvc.set_value_for_keypath(self, key, val)
         self.layout()
@@ -262,7 +263,7 @@ class View(object):
                 topleft = child.frame.topleft
 
                 if child.shadowed:
-                    shadow_size = theme.current.shadow_size
+                    shadow_size = self.theme.shadow_size
                     shadow_topleft = (topleft[0] - shadow_size // 2,
                                       topleft[1] - shadow_size // 2)
                     self.surface.blit(child.shadow_image, shadow_topleft)

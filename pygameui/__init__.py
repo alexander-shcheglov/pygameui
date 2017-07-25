@@ -3,6 +3,7 @@
 import logging
 
 import pygame
+import copy
 
 from . import focus
 from . import window
@@ -76,16 +77,31 @@ logger = logging.getLogger(__name__)
 Rect = pygame.Rect
 window_surface = None
 
+default_config = {
+    'DISPLAY_SIZE': (640, 480),
+    'DISPLAY_MODE': pygame.HWSURFACE | pygame.DOUBLEBUF,
+    'MOUSE_VISIBLE': True
+}
 
-def init(name='', window_size=(640, 480)):
+
+def init(name='', config=None):
+    """
+    init window function
+    :param name: window name
+    :param config: dict as default_config
+    :return:
+    """
     logger.debug('init %s %s' % (__name__, __version__))
     pygame.init()
     logger.debug('pygame %s' % pygame.__version__)
+    config = copy.deepcopy(default_config).update(config) if config else default_config
+
     pygame.key.set_repeat(200, 50)
     global window_surface
-    window_surface = pygame.display.set_mode(window_size)
+    window_surface = pygame.display.set_mode(config['DISPLAY_SIZE'], config['DISPLAY_MODE'])
     pygame.display.set_caption(name)
-    window.rect = pygame.Rect((0, 0), window_size)
+    window.rect = pygame.Rect((0, 0), config['DISPLAY_SIZE'])
+    pygame.mouse.set_visible(config['MOUSE_VISIBLE'])
     theme.init()
 
 
