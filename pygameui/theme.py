@@ -459,6 +459,8 @@ def init_dracula_theme():
                     ('normal', 'font', resource.get_font(font_size, use_bold=True)),
                     ('normal', 'border_widths', 1),
                     ('normal', 'border_color', red_color),
+                    ('normal', 'text_shadow_color', red_color),
+                    ('normal', 'text_shadow_offset', (0, 1)),
                 ]
             ),
             (
