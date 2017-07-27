@@ -94,14 +94,18 @@ def init(name='', config=None):
     logger.debug('init %s %s' % (__name__, __version__))
     pygame.init()
     logger.debug('pygame %s' % pygame.__version__)
-    config = copy.deepcopy(default_config).update(config) if config else default_config
+    if config:
+        cfg = copy.deepcopy(default_config)
+        cfg.update(config)
+    else:
+        cfg = default_config
 
     pygame.key.set_repeat(200, 50)
     global window_surface
-    window_surface = pygame.display.set_mode(config['DISPLAY_SIZE'], config['DISPLAY_MODE'])
+    window_surface = pygame.display.set_mode(cfg['DISPLAY_SIZE'], cfg['DISPLAY_MODE'])
     pygame.display.set_caption(name)
-    window.rect = pygame.Rect((0, 0), config['DISPLAY_SIZE'])
-    pygame.mouse.set_visible(config['MOUSE_VISIBLE'])
+    window.rect = pygame.Rect((0, 0), cfg['DISPLAY_SIZE'])
+    pygame.mouse.set_visible(cfg['MOUSE_VISIBLE'])
     theme.init()
 
 
